@@ -24,7 +24,7 @@ class InitApp implements ControllerProviderInterface
      */
     public function setup(Application $app)
     {
-        $app['config'] = $this->readConfig();
+        $app['config'] = $this->getConfig();
 
         if (isset($app['config'][self::RABBIT])) {
             $app[self::RABBIT] = $this->connectToRabbitMqServer($app);
@@ -46,12 +46,12 @@ class InitApp implements ControllerProviderInterface
     }
 
     /**
-     * Read config file
+     * Get config file
      *
      * @throws \Exception
      * @return array
      */
-    public function readConfig()
+    public function getConfig()
     {
         if (!file_exists($configDir = __DIR__ . '/../../config/config.yml')) {
             throw new \Exception("Not found config.yml file", 500);
